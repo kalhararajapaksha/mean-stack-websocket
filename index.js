@@ -12,6 +12,8 @@ httpServer.listen(9090, () => console.log("Listening.. on 9090"))
 const clients = {};
 const games = {};
 var shedules = {};
+
+//database connection
 const uri = "mongodb+srv://cluster1mean:vrU1YqaDsTccrgAJ@cluster0.lvh58gt.mongodb.net?retryWrites=true&w=majority";
 
 const db_con = new MongoClient(uri, { useNewUrlParser: true });
@@ -54,18 +56,12 @@ wsServer.on("request", request => {
             const gameId = result.gameId;
             const game = games[gameId];
 
-            // if (game.clients.length >= 3) 
-            // {
-            //     //sorry max players reach
-            //     return;
-            // }
-            //const color =  {"0": "Red", "1": "Green", "2": "Blue"}[game.clients.length]
+
             game.clients.push({
                 "clientId": clientId,
                 "color": "Red"
             })
-            //start the game
-            //if (game.clients.length === 3) updateGameState();
+
 
             const payLoad = {
                 "method": "join",
